@@ -14,7 +14,16 @@ dotenv.config();
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+    origin: [
+        'https://ratemystore-frontend.vercel.app',
+        'https://ratemystore-frontend-1bp2k09m7.vercel.app',
+        'http://localhost:5173' // For local development
+    ],
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(express.json());
 
 // Test database connection
