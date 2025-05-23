@@ -12,11 +12,10 @@
             "dest": "server.js",
             "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
             "headers": {
-                "Access-Control-Allow-Origin": "https://ratemystore-frontend.vercel.app",
+                "Access-Control-Allow-Origin": "https://ratemystore-frontend-okpyq1afd.vercel.app",
                 "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
                 "Access-Control-Allow-Headers": "Content-Type, Authorization",
-                "Access-Control-Allow-Credentials": "true",
-                "Access-Control-Allow-Origin": "https://ratemystore-backend-9d40aog70-gaurav-jaiswals-projects-031b18ef.vercel.app"
+                "Access-Control-Allow-Credentials": "true"
             }
         }
     ]
