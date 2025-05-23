@@ -18,6 +18,7 @@ app.use(cors({
     origin: [
         'https://ratemystore-frontend.vercel.app',
         'https://ratemystore-frontend-1bp2k09m7.vercel.app',
+        'https://ratemystore-backend-9d40aog70-gaurav-jaiswals-projects-031b18ef.vercel.app',
         'http://localhost:5173' // For local development
     ],
     credentials: true,
