@@ -3,13 +3,31 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
-const pool = new Pool({
-    user: process.env.DB_USER || 'postgres',
-    host: process.env.DB_HOST || 'localhost',
-    database: process.env.DB_NAME || 'ratemystore',
-    password: process.env.DB_PASSWORD,
-    port: process.env.DB_PORT || 5432,
-});
+// Parse the connection string if it exists
+let dbConfig = {};
+if (process.env.DATABASE_URL) {
+    // If using connection string
+    dbConfig = {
+        connectionString: process.env.DATABASE_URL,
+        ssl: {
+            rejectUnauthorized: false
+        }
+    };
+} else {
+    // If using individual parameters
+    dbConfig = {
+        user: process.env.DB_USER,
+        host: process.env.DB_HOST,
+        database: process.env.DB_NAME,
+        password: process.env.DB_PASSWORD,
+        port: process.env.DB_PORT || 5432,
+        ssl: {
+            rejectUnauthorized: false
+        }
+    };
+}
+
+const pool = new Pool(dbConfig);
 
 // Add error handling for the pool
 pool.on('error', (err) => {

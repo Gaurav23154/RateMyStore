@@ -1,35 +1,36 @@
 -- Create users table
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(60) NOT NULL,
-    email VARCHAR(255) NOT NULL UNIQUE,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
-    address VARCHAR(400) NOT NULL,
-    role VARCHAR(20) NOT NULL CHECK (role IN ('admin', 'user', 'store_owner')),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    address TEXT,
+    role VARCHAR(50) NOT NULL CHECK (role IN ('admin', 'store_owner', 'user')),
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Create stores table
-CREATE TABLE stores (
+CREATE TABLE IF NOT EXISTS stores (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(60) NOT NULL,
-    email VARCHAR(255) NOT NULL UNIQUE,
-    address VARCHAR(400) NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+    address TEXT NOT NULL,
     owner_id INTEGER REFERENCES users(id),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Create ratings table
-CREATE TABLE ratings (
+CREATE TABLE IF NOT EXISTS ratings (
     id SERIAL PRIMARY KEY,
-    user_id INTEGER REFERENCES users(id),
     store_id INTEGER REFERENCES stores(id),
+    user_id INTEGER REFERENCES users(id),
     rating INTEGER NOT NULL CHECK (rating >= 1 AND rating <= 5),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    UNIQUE(user_id, store_id)
+    comment TEXT,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(store_id, user_id)
 );
 
 -- Create indexes for better query performance
